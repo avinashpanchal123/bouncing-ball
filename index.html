@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bouncing Ball with Gravity</title>
+
+  <style>
+    /* remove default page spacing */
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #222;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="myCanvas"></canvas>
+
+  <script>
+    var canvas = document.getElementById('myCanvas');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    var ctx = canvas.getContext('2d');
+
+    var posX = 500;
+    var posY = 100;
+
+    var velX = 5;
+    var velY = 0;
+
+    var gravity = 0.5;
+    var radius = 70;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // background
+      ctx.fillStyle = "#e0f7fa";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // move ball
+      posX += velX;
+      posY += velY;
+
+      // gravity
+      velY += gravity;
+
+      // bounce left/right
+      if (posX + radius > canvas.width || posX - radius < 0) {
+        velX = -velX;
+      }
+
+      // bounce bottom
+      if (posY + radius > canvas.height) {
+        posY = canvas.height - radius;
+        velY = -velY * 0.9;
+      }
+
+      // draw ball
+      ctx.beginPath();
+      ctx.arc(posX, posY, radius, 0, Math.PI * 2);
+      ctx.fillStyle = "orange";
+      ctx.fill();
+    }
+
+    animate();
+  </script>
+
+</body>
+</html>
